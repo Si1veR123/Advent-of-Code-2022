@@ -1,3 +1,5 @@
+// https://adventofcode.com/2022/day/3
+
 use std::collections::HashSet;
 use std::collections::hash_map::RandomState;
 use std::fs::File;
