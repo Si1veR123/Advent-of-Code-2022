@@ -6,13 +6,14 @@ def eval_round(move1, move2) -> int:
     move2_encoded = ord(move2)-87
 
     if move1_encoded == move2_encoded:
+        # draw
         return move2_encoded + 3
 
-    if (move1_encoded, move2_encoded) == (1, 2) or \
-       (move1_encoded, move2_encoded) == (2, 3) or \
-       (move1_encoded, move2_encoded) == (3, 1):
+    if move1_encoded%3 + 1 == move2_encoded:
+        # win
        return move2_encoded + 6
     
+    # lose
     return move2_encoded
 
 with open("../data/2.txt") as file:
