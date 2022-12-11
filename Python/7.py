@@ -97,7 +97,7 @@ while i < len(lines):
             contained_items.append(next_line)
 
         fs.process_new_items(contained_items)
-        continue  # break as next line is a command, dont increment
+        continue  # continue as next line is a command, dont increment
     i += 1
 
 print("Part 1")
