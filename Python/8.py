@@ -46,7 +46,7 @@ import typing
 
 MATRIX_TYPE = typing.Iterable[typing.Iterable[int]]
 
-def visible_in_row_method_one(row: typing.List[int], visible_direction=0) -> int:
+def visible_in_row_method_1(row: typing.List[int], visible_direction=0) -> int:
     # direction (looking from left/right/both) is 0, 1 or 2 (0=both, 1=left, 2=right)
     if len(row) == 0:
         return 0
@@ -65,7 +65,7 @@ def visible_in_row_method_one(row: typing.List[int], visible_direction=0) -> int
         visible_as_binary |= (1 << len(row) - 1 - first_occurence)
 
         # calculate the visibility of the sublist relative to the current binary
-        relative_visible_binary = visible_in_row_method_one(row[:first_occurence], 1)
+        relative_visible_binary = visible_in_row_method_1(row[:first_occurence], 1)
         absolute_visible_binary = relative_visible_binary << (len(row) - first_occurence)
 
         # bitwise OR with the sublist visiblity
@@ -76,7 +76,7 @@ def visible_in_row_method_one(row: typing.List[int], visible_direction=0) -> int
         # encode the last occurence of max value as binary
         visible_as_binary |= (1 << len(row) - 1 - last_occurence)
 
-        absolute_visible_binary = visible_in_row_method_one(row[last_occurence+1:], 2)
+        absolute_visible_binary = visible_in_row_method_1(row[last_occurence+1:], 2)
 
         # bitwise OR with the sublist visiblity
         visible_as_binary |= absolute_visible_binary
@@ -128,11 +128,11 @@ if __name__ == "__main__":
     height_matrix = [[int(char) for char in line] for line in data.splitlines()]
     
     print("Timing method one")
-    print(timeit.timeit("run_method(height_matrix, visible_in_row)", setup="from __main__ import run_method, height_matrix, visible_in_row", number=1000))
+    print(timeit.timeit("run_method(height_matrix, visible_in_row_method_1)", setup="from __main__ import run_method, height_matrix, visible_in_row_method_1", number=10))
     print("Timing method two")
-    print(timeit.timeit("run_method(height_matrix, visible_in_row_method_2)", setup="from __main__ import run_method, height_matrix, visible_in_row_method_2", number=1000))
+    print(timeit.timeit("run_method(height_matrix, visible_in_row_method_2)", setup="from __main__ import run_method, height_matrix, visible_in_row_method_2", number=10))
 
-    overall_visibilities = run_method(height_matrix, visible_in_row_method_one)
+    overall_visibilities = run_method(height_matrix, visible_in_row_method_2)
 
     visible = sum([sum([int(bit) for bit in row]) for row in overall_visibilities])
     print("Part 1")
