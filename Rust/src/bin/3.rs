@@ -4,6 +4,7 @@ use std::collections::HashSet;
 use std::collections::hash_map::RandomState;
 use std::fs::File;
 use std::io::Read;
+use std::time::Instant;
 
 fn get_priority(c: char) -> u8 {
     if c.is_uppercase() {
@@ -14,6 +15,8 @@ fn get_priority(c: char) -> u8 {
 }
 
 fn main() {
+    let start = Instant::now();
+
     let mut file = File::open("../data/3.txt").expect("Data file not found");
     let mut string_buf = String::new();
     file.read_to_string(&mut string_buf).expect("Reading file failed");
@@ -38,19 +41,16 @@ fn main() {
     println!("Part 2");
     let mut accumulated_groups = vec![];
 
-    // not very efficient as new vector is heap allocated for each element
-    lines.iter()
-        .fold(vec![], |acc, &x| {
-            let mut next_vec = acc.clone();
-            next_vec.push(x);
+    let mut next_vec: Vec<&str> = Vec::with_capacity(3);
+    for &line in &lines {
+        next_vec.push(line);
 
-            if next_vec.len() == 3 {
-                accumulated_groups.push(next_vec);
-                return vec![]
-            }
-            next_vec
-        });
-    
+        if next_vec.len() == 3 {
+            accumulated_groups.push(next_vec.clone());
+            next_vec.clear();
+        }
+    }
+
     let badges_sum: u32 = accumulated_groups.iter().map(
         |x| {
             // assumed length of x is always 3, or will panic
@@ -69,4 +69,6 @@ fn main() {
     ).sum();
 
     println!("{}", badges_sum);
+
+    println!("Took: {:?}", Instant::now() - start);
 }
