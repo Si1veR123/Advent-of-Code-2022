@@ -100,5 +100,5 @@ fn main() {
     ).sum();
 
     println!("Part 1\n{}", ones_count);
-    println!("Took (remember to compile with --rel): {:?}", Instant::now() - start);
+    println!("Took (remember to compile with --release): {:?}", Instant::now() - start);
 }
