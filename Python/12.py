@@ -3,7 +3,7 @@
 import numpy as np
 import time
 
-# print all of numpy matrixes for debugging
+# print all of numpy matrices for debugging
 import sys
 np.set_printoptions(threshold=sys.maxsize)
 
